@@ -9,11 +9,14 @@ import android.util.Log;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wordbooster.Utils.AppConstant;
+import com.wordbooster.database.WordDataHandler;
+import com.wordbooster.model.Word;
 import com.wordbooster.model.WordData;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -41,7 +44,8 @@ public class WordBoosterNetworkService extends IntentService{
             String response = getWord();
             WordData wordData = getWordData(response);
             responseBundle = new Bundle();
-            responseBundle.putParcelable(AppConstant.RESPONSE_KEY, wordData);
+            //responseBundle.putParcelable(AppConstant.RESPONSE_KEY, wordData);
+            responseBundle.putInt(AppConstant.RESPONSE_KEY, 200);
         } catch (IOException e) {
             responseBundle = new Bundle();
             responseBundle.putString(AppConstant.ERROR_KEY, e.getMessage());
@@ -68,7 +72,13 @@ public class WordBoosterNetworkService extends IntentService{
     private WordData getWordData(String strWord) throws JSONException, IOException {
         Log.i(TAG, "Word's Json : "+strWord);
         ObjectMapper mapper = new ObjectMapper();
-        WordData worddata = mapper.readValue(strWord, WordData.class);
-        return  worddata;
+        WordData wordData = mapper.readValue(strWord, WordData.class);
+        //insert into db
+        List<Word> words = wordData.getWords();
+        for (Word word: words) {
+            WordDataHandler.saveWord(this, word);
+        }
+        Log.i(TAG, "Word's data insertion done");
+        return  wordData;
     }
 }

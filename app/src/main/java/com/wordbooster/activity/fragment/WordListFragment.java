@@ -94,7 +94,7 @@ public class WordListFragment extends BaseFragment {
         if(words == null){
             requestForWord();
         }else{
-            setAdapter(words);
+            setAdapter();
         }
 
         ItemClickSupport.addTo(mRvWord).setOnItemClickListener(
@@ -134,22 +134,21 @@ public class WordListFragment extends BaseFragment {
             Bundle bundle = intent.getExtras();
             String error = bundle.getString(AppConstant.ERROR_KEY);
             if(error == null){
-                WordData wordData = bundle.getParcelable(AppConstant.RESPONSE_KEY);
-                if(wordData != null){
-                    List<Word> words = wordData.getWords();
-                    for (Word word: words) {
-                       WordDataHandler.saveWord(getActivity(), word);
-                    }
-                    setAdapter(words);
+                int response = bundle.getInt(AppConstant.RESPONSE_KEY);
+                if(response == 200){
+                    setAdapter();
                 }
             }else{
                 //ToDo all error handling would be here
+                Log.i(TAG, "Error String"+error);
             }
 
         }
     };
 
-    private void setAdapter(List<Word> words){
+    private void setAdapter(){
+        Log.i(TAG, "Adapert set");
+        List<Word> words = WordDataHandler.getAllWordList(getActivity());
         mLoadingView.setVisibility(View.GONE);
         mRvWord.setVisibility(View.VISIBLE);
         WordAdapter wordAdapter = new WordAdapter(getActivity(), words);

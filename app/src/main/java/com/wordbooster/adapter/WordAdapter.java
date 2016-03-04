@@ -68,7 +68,8 @@ public class WordAdapter extends
         int id = currentItem.getId();
         float ratio = currentItem.getRatio();
         String url = WORL_THUMB_URL + id + ".png";
-        if(ratio >= 0) {
+        // No need to check this condition APi will handle it
+        //if(ratio >= 0) {
             Log.i(TAG, "IMAGE URL : " + url);
             Glide.with(mContext)
                     .load(url)
@@ -76,9 +77,9 @@ public class WordAdapter extends
                     .placeholder(R.mipmap.default_thumb)
                     .crossFade()
                     .into(holder.wordPic);
-        }else{
+       /* }else{
             Log.i(TAG, "No Image Url "+ url);
-        }
+        }*/
     }
 
     @Override

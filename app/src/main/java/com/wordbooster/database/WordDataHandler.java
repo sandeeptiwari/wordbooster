@@ -27,7 +27,7 @@ public class WordDataHandler {
         values.put(WordBoosterContract.WordBoosterColumns.MEANING, word.getMeaning());
         values.put(WordBoosterContract.WordBoosterColumns.RATIO, word.getRatio());
         ctx.getContentResolver().insert(WordBoosterContract.WordBooster.CONTENT_URI, values);
-        Log.i(TAG, "post data insertion is complete");
+        Log.i(TAG, "word's row inserted");
     }
 
 
