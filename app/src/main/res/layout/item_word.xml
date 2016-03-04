@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/word_list_bg">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/word_pic"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/black"
+        style="@style/word_pic"/>
+
+    <TextView
+        android:id="@+id/word_name"
+        style="@style/word_list_item_label"/>
+
+    <TextView
+        android:id="@+id/word_meaning"
+        style="@style/word_list_meaning"/>
+
+</RelativeLayout>
